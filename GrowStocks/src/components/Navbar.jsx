@@ -5,16 +5,16 @@ const Navbar = () => {
     <nav className="h-24 w-screen text-black flex justify-between items-center ">
         <div className="pl-8"> 
             <img src="" alt="" />
-            <a href="/home">GrowStocks</a>
+            <a href="/home" className='font-roboto font-normal bold text-3xl'>GrowStocks.</a>
         </div>
         <div>
-            <ul className="flex">
-                <li className="px-8"><a href="/about">About</a></li>
-                <li className="px-8"><a href="/stocks">Stocks</a></li>
-                <li className="px-8"><a href="/ipos">IPO</a></li>
-                <li className="px-8"><a href="/mutual">Mutual Funds</a></li>
-                <li className="px-8"><button>Signup</button></li>
-                <li className="px-8"><button>Login</button></li>
+            <ul className="flex font-roboto font-normal italic">
+                <li className="px-8 text-xl hover:text-white"><a href="/about">About</a></li>
+                <li className="px-8 text-xl hover:text-white" ><a href="/stocks">Stocks</a></li>
+                <li className="px-8 text-xl hover:text-white"><a href="/ipos">IPO</a></li>
+                <li className="px-8 text-xl hover:text-white"><a href="/mutual">Mutual Funds</a></li>
+                <button className='px-8 text-xl flex font-roboto font-normal italic hover:text-white'>Signup</button>
+                <button className='flex font-roboto font-normal italic px-8 text-xl hover:text-white'>Login</button>
             </ul>
         </div>
         
