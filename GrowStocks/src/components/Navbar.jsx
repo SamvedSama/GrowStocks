@@ -4,7 +4,7 @@ const Navbar = () => {
   return (
     <nav className="h-24 w-screen text-black flex justify-between items-center ">
         <div className="pl-8"> 
-            <img src="" alt="" />
+            {/* <img src= "src/assets/GrowStocks.svg"/> */}
             <a href="/home" className='font-roboto font-normal bold text-3xl'>GrowStocks.</a>
         </div>
         <div>
