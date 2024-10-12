@@ -18,8 +18,6 @@ const Navbar = () => {
                 <li className="flex font-roboto font-normal italic px-8 text-xl hover:text-blue-700"><Link to="/login">Login</Link></li>
             </ul>
         </div>
-        
-        
     </nav>
   )
 }
