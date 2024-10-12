@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider,Navigate } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -10,6 +10,10 @@ import Mutual from './components/Mutual';
 import About from './components/About';
 
 const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Navigate to="/home" replace />,
+  },
   {
     path: '/home',
     element: (
@@ -72,6 +76,10 @@ const router = createBrowserRouter([
         <Mutual />
       </>
     ),
+  },
+  {
+    path: '*',
+    element: <Navigate to="/home" replace />,
   },
 ]);
 
