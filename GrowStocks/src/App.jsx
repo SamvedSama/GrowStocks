@@ -2,12 +2,13 @@ import { createBrowserRouter, RouterProvider,Navigate } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Login from './components/Login';
-import SignUp from './components/SignUp';
+// import Login from './components/Login';
+// import SignUp from './components/SignUp';
 import Stocks from './components/Stocks';
 import IPOs from './components/IPOs';
 import Mutual from './components/Mutual';
 import About from './components/About';
+import UponLogin from './components/UponLogin';
 
 const router = createBrowserRouter([
   {
@@ -23,24 +24,24 @@ const router = createBrowserRouter([
       </>
     ),
   },
-  {
-    path: '/login',
-    element: (
-      <>
-        <Navbar />
-        <Login />
-      </>
-    ),
-  },
-  {
-    path: '/signup',
-    element: (
-      <>
-        <Navbar />
-        <SignUp />
-      </>
-    ),
-  },
+  // {
+  //   path: '/login',
+  //   element: (
+  //     <>
+  //       <Navbar />
+  //       <Login />
+  //     </>
+  //   ),
+  // },
+  // {
+  //   path: '/signup',
+  //   element: (
+  //     <>
+  //       <Navbar />
+  //       <SignUp />
+  //     </>
+  //   ),
+  // },
   {
     path: '/about',
     element: (
@@ -78,6 +79,14 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: '/welcome',
+    element: (
+      <>
+        <UponLogin/>
+      </>
+    ),
+  },
+  {
     path: '*',
     element: <Navigate to="/home" replace />,
   },
@@ -85,7 +94,7 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (
-    <div className="">
+    <div>
       <RouterProvider router={router} />
     </div>
   );
