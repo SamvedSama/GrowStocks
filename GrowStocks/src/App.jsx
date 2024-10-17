@@ -4,13 +4,12 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 // import Login from './components/Login';
 // import SignUp from './components/SignUp';
-import Stocks from './components/Stocks';
-import IPOs from './components/IPOs';
+import Mystocks from './components/Mystocks';
 import Mutual from './components/Mutual';
 import About from './components/About';
 import UponLogin from './components/UponLogin';
 import Myfunds from './components/Myfunds.jsx'
-
+import Hamburgernav from './components/Hamburgernav.jsx';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -53,20 +52,11 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: '/stocks',
+    path: '/mystocks',
     element: (
       <>
-        <Navbar />
-        <Stocks />
-      </>
-    ),
-  },
-  {
-    path: '/ipos',
-    element: (
-      <>
-        <Navbar />
-        <IPOs />
+        <Hamburgernav/>
+        <Mystocks />
       </>
     ),
   },

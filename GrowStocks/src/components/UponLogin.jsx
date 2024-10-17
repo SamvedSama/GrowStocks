@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import {Link} from 'react-router-dom'
 
 
 const UponLogin = () => {
@@ -33,15 +34,15 @@ const UponLogin = () => {
         {/* Menu items */}
         {isOpen && (
           <ul className="absolute left-0 mt-2 bg-white rounded-lg shadow-lg w-40">
-            <li className="p-2 text-slate-950 hover:bg-gray-100 cursor-pointer">
+            <Link to="/mystocks"><li className="p-2 text-slate-950 hover:bg-gray-100 cursor-pointer">
               My stocks
-            </li>
-            <li className="p-2 text-slate-950 hover:bg-gray-100 cursor-pointer">
+            </li></Link>
+            <Link to="/mutual"><li className="p-2 text-slate-950 hover:bg-gray-100 cursor-pointer">
               My mutual funds
-            </li>
-            <li className="p-2 text-slate-950 hover:bg-gray-100 cursor-pointer">
+            </li></Link>
+            <Link to="/watchlist"><li className="p-2 text-slate-950 hover:bg-gray-100 cursor-pointer">
               Watchlist
-            </li>
+            </li></Link>
           </ul>
         )}
       </div>
