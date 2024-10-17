@@ -9,7 +9,7 @@ import IPOs from './components/IPOs';
 import Mutual from './components/Mutual';
 import About from './components/About';
 import UponLogin from './components/UponLogin';
-import Myfunds from './components/sample.jsx'
+import Myfunds from './components/Myfunds.jsx'
 
 const router = createBrowserRouter([
   {
