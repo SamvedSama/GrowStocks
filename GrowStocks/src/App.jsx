@@ -9,6 +9,7 @@ import IPOs from './components/IPOs';
 import Mutual from './components/Mutual';
 import About from './components/About';
 import UponLogin from './components/UponLogin';
+import Myfunds from './components/sample.jsx'
 
 const router = createBrowserRouter([
   {
@@ -85,6 +86,14 @@ const router = createBrowserRouter([
         <UponLogin/>
       </>
     ),
+  },
+  {
+    path:'/myfunds',
+    element: (
+        <>
+        {/* <Navbar/> */}
+        <Myfunds/>
+        </>    )
   },
   {
     path: '*',
