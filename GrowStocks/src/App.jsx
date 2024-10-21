@@ -10,6 +10,7 @@ import About from './components/About';
 import UponLogin from './components/UponLogin';
 import Myfunds from './components/Myfunds.jsx'
 import Hamburgernav from './components/Hamburgernav.jsx';
+import Watchlist from './components/Watchlist.jsx'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -83,6 +84,14 @@ const router = createBrowserRouter([
         <>
         {/* <Navbar/> */}
         <Myfunds/>
+        </>    )
+  },
+  {
+    path:'/watchlist',
+    element: (
+        <>
+        <Hamburgernav/>
+        <Watchlist/>
         </>    )
   },
   {
