@@ -125,8 +125,8 @@ const Myfunds = () => {
                 <th className="pb-2">DATE</th>
               </tr>
             </thead>
-            <tbody>
-              {/* Dummy Data */}
+           {/* <tbody>
+               Dummy Data
               <tr>
                 <td className="py-2">Company A</td>
                 <td className="py-2">BUY</td>
@@ -143,10 +143,10 @@ const Myfunds = () => {
                 <td className="py-2">Bonds</td>
                 <td className="py-2">2024-10-10</td>
               </tr>
-            </tbody>
+            </tbody>*/}
           </table>
         </div>
-      </div>
+      </div> 
     </section>
   );
 }
