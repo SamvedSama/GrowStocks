@@ -1,6 +1,6 @@
   import React, { useState, useEffect} from 'react';
   import {Link} from 'react-router-dom'
-  import { stocks as initialStocks } from '../../constant'; // Import stocks
+  import { stocks as initialStocks } from '/Users/Shambhavi AUM/Desktop/Folder with a lot of space/GrowStocks/GrowStocks/constant'; // Import stocks
   
   
   const Mystocks = () => {

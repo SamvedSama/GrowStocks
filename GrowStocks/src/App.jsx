@@ -65,7 +65,7 @@ const router = createBrowserRouter([
     path: '/mutual',
     element: (
       <>
-        <Hamburgernav/>
+        <Navbar />
         <Mutual />
       </>
     ),
