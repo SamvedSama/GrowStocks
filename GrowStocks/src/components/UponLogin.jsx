@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import {Link} from 'react-router-dom'
-import { stocks as initialStocks } from '/Users/Shambhavi AUM/Desktop/Folder with a lot of space/GrowStocks/GrowStocks/constant'; 
-import { mutuals as initialMutuals } from '/Users/Shambhavi AUM/Desktop/Folder with a lot of space/GrowStocks/GrowStocks/constant'; 
-import { WatchlistData as initialWatchlist } from '/Users/Shambhavi AUM/Desktop/Folder with a lot of space/GrowStocks/GrowStocks/constant'; 
+import { stocks as initialStocks } from '../../constant'; 
+import { mutuals as initialMutuals } from '../../constant'; 
+import { WatchlistData as initialWatchlist } from '../../constant'; 
 import { CgBookmark, CgMathPlus } from "react-icons/cg";
 
 const UponLogin = () => {
