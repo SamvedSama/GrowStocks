@@ -34,7 +34,7 @@ const Hamburgernav = () => {
       </div>
 
       {/* Center section: MARKET TODAY */}
-      <p className="text-4xl text-white font-semibold mx-auto">My portfolio</p>
+      <p className="text-4xl text-white font-semibold ml-20 text-center">My portfolio</p>
 
       {/* Right section: FUNDS button */}
       <Link to="/myfunds"><button className="px-6 py-2 border text-white border-white rounded-full hover:bg-white hover:text-slate-800 transition duration-500">FUNDS</button></Link>
