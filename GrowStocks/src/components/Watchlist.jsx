@@ -1,5 +1,5 @@
 import React,{ useState } from 'react'
-import { WatchlistData as initialWatchlist } from '/Users/Shambhavi AUM/Desktop/Folder with a lot of space/GrowStocks/GrowStocks/constant'; 
+import { WatchlistData as initialWatchlist } from '../../constant'; 
 import {CgBookmark} from "react-icons/cg";
 
 
