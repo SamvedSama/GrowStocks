@@ -6,19 +6,28 @@ const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
-
-const connectDB = async()=>{
-    try{
-        await mongoose.connect(process.env.MONGO_URL);
-        console.log("MongoDB Connected");
-    }catch(error){
-        console.log(error);
-    }
-}
+const auth = require('./routes/auth');
 
 dotenv.config();
-
 const app = express();
+
+const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_URL);
+        console.log("MongoDB Connected");
+    } catch (error) {
+        console.log("Error connecting to MongoDB:", error);
+    }
+};
+
+// Middleware - ensure express.json() is loaded before routes
+app.use(express.json());
+app.use(cors());
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Route setup after middleware
+app.use("/api/auth", auth);
 
 app.get('/',(request,response)=>{
     console.log(request);
