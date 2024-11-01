@@ -29,7 +29,7 @@ const router = createBrowserRouter([
     path: '/login',
     element: (
       <>
-        <Navbar />
+        {/* <Navbar /> */}
         <Login />
       </>
     ),
@@ -38,7 +38,7 @@ const router = createBrowserRouter([
     path: '/signup',
     element: (
       <>
-        <Navbar />
+        {/* <Navbar /> */}
         <SignUp />
       </>
     ),
