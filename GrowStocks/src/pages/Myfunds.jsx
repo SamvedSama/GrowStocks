@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState} from 'react';
-import VirtualKeyboard from './Keyboard';
-import Hamburgernav from './Hamburgernav'
+import VirtualKeyboard from '../components/Keyboard';
+// import Hamburgernav from '../components/Hamburgernav';
 import {Link} from 'react-router-dom'
 const Myfunds = () => {
   
