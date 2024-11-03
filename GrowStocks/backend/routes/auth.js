@@ -6,7 +6,7 @@ const SignUp = require('../models/SignUp');
 
 //Sign Up
 router.post('/signup', async (req, res) => {
-    console.log('Request Body:', req.body);
+    // console.log('Request Body:', req.body);
     try {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(req.body.password, salt);
