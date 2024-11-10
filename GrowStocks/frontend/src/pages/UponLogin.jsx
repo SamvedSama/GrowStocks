@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import {Link} from 'react-router-dom'
 import { stocks as initialStocks } from '../../constant'; 
 import { mutuals as initialMutuals } from '../../constant'; 
 import { WatchlistData as initialWatchlist } from '../../constant'; 
 import { CgBookmark, CgMathPlus } from "react-icons/cg";
+import { url } from '../url';
+import axios from 'axios';
 
 const UponLogin = () => {
   const [stocks] = useState(initialStocks);
@@ -12,10 +14,25 @@ const UponLogin = () => {
   const [WatchlistData] = useState(initialWatchlist);
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const portfolioValue = 123456; // Replace this with your actual value
+  const portfolioValue = 0; // Replace this with your actual value
   const [selectedUnit, setselectedUnit] = useState(null);
   const [isAdded, setIsAdded] = useState(false);
   const [watchlist, setWatchlist] = useState({});
+  const [firstname, setFirstname] = useState('');
+
+  const fetchUserData = async () => {
+    try {
+      const res = await axios.get(url + "/api/auth/user", { withCredentials: true });
+      console.log("User data:", res.data);
+      setFirstname(res.data.firstname);  // Store the firstname
+    } catch (err) {
+      console.error("Error fetching user data:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData(); // Fetch user data when the component mounts
+  }, []);
 
   const updateWatchlist = (stock) => {
 
@@ -110,7 +127,7 @@ const UponLogin = () => {
     {/* 2nd section */}
 
     <div className='h-20 bg-white mt-5 flex justify-center items-center'>
-      <p className='text-4xl'>Hello <span className='bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-yellow-500 to-yellow-700'>Samved</span>, Your portfolio value is {isVisible ? `$${portfolioValue}` : '$******'}</p>
+      <p className='text-4xl'>Hello <span className='bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-yellow-500 to-yellow-700'>{firstname}</span>, Your portfolio value is {isVisible ? `$${portfolioValue}` : '$******'}</p>
       <span><button className=' text-4xl p-2 rounded-full text-slate-950 hover:bg-blue-600 transition duration-300' onClick={toggleVisibility}>{isVisible? <FaEyeSlash /> : <FaEye />}</button></span>
     </div>
     <div className="grid grid-cols-3 gap-4 mt-4 text-white divide-x">

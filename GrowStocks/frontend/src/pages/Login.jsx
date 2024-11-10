@@ -15,8 +15,9 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(url+"/api/auth/login", { email, password });
-      // console.log('Login successful:', res.data);
+      const res = await axios.post(url+"/api/auth/login", { email, password },{ withCredentials: true });
+      console.log('Login successful:', res.data);
+      
       setError(false);
       navigate("/welcome");
     } catch (err) {
