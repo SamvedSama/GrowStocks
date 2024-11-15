@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import {Link} from 'react-router-dom'
+import {Link,useNavigate} from 'react-router-dom'
 import { stocks as initialStocks } from '../../constant'; 
 import { mutuals as initialMutuals } from '../../constant'; 
 import { WatchlistData as initialWatchlist } from '../../constant'; 
@@ -19,6 +19,7 @@ const UponLogin = () => {
   const [isAdded, setIsAdded] = useState(false);
   const [watchlist, setWatchlist] = useState({});
   const [firstname, setFirstname] = useState('');
+  const navigate = useNavigate();
 
   const fetchUserData = async () => {
     try {
@@ -76,7 +77,7 @@ const UponLogin = () => {
   };
 
   const handleBuy=(unit)=>{
-    prompt(`Buying ${unit.stockname || unit.mutualname}`);
+    navigate(`/buy/${unit.stockname}`);
   };
 
   const handleIPOApply=(ipo)=>{
@@ -181,7 +182,7 @@ const UponLogin = () => {
               <div className="flex justify-between mt-9">
                 <button
                   className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition ml-auto"
-                  onClick={(event) => {event.stopPropagation();handleBuy(stock)}}
+                  onClick={(event) => {event.stopPropagation();handleBuy(mutual)}}
                 >
                   BUY
                 </button>
@@ -204,7 +205,7 @@ const UponLogin = () => {
               <div className="flex justify-between mt-9">
                 <button
                   className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition ml-auto"
-                  onClick={(event) => {event.stopPropagation();handleIPOApply(ipo)}}
+                  onClick={(event) => {event.stopPropagation();handleIPOApply(mutual)}}
                 >
                   APPLY
                 </button>

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import {url} from "../url";
 
+
 const Signup = () => {
 
     const [firstname,setfirstname] = useState('');
@@ -19,6 +20,7 @@ const Signup = () => {
       try{
           const res = await axios.post(url+"/api/auth/signup",{firstname,lastname,birthdate,email,password});
           // console.log('Signup successful:', res.data);
+         
           setfirstname(res.data.firstname);
           setlastname(res.data.lastname);
           setBirthdate(res.data.birthdate);
@@ -137,3 +139,4 @@ const Signup = () => {
 };
 
 export default Signup;
+
