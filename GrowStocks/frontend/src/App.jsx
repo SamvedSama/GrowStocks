@@ -11,6 +11,7 @@ import UponLogin from './pages/UponLogin.jsx';
 import Myfunds from './pages/Myfunds.jsx'
 import Hamburgernav from './components/Hamburgernav.jsx';
 import Watchlist from './pages/Watchlist.jsx'
+import StockTrans from './pages/StockTrans.jsx';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -93,6 +94,13 @@ const router = createBrowserRouter([
         <Hamburgernav/>
         <Watchlist/>
         </>    )
+  },
+  {
+    path: '/buy/:stockname',
+    element: (
+      <>
+        <StockTrans />
+      </> )     
   },
   {
     path: '*',

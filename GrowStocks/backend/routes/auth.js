@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const SignUp = require('../models/SignUp');
-
+const Transaction = require('../models/stocktransac');
 const verifyToken = (req, res, next) => {
     const token = req.cookies.access_token; // assuming you're using cookies
     if (!token) return res.status(401).json("You're not authenticated!");
@@ -80,6 +80,30 @@ router.get('/user', verifyToken, async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+router.post("/payment", async (req, res) => {
+    const { stockName, quantity, price } = req.body;
+  
+    if (!stockName || !quantity || !price) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+  
+    const totalAmount = quantity * price;
+  
+    try {
+      const transaction = new Transaction({ 
+        name: SignUp.firstname,
+        details:{
+            stockName, 
+            quantity, 
+            totalAmount },
+      });
+      await transaction.save();
+      res.status(200).json({ message: "Payment successful!" });
+    } catch (error) {
+      res.status(500).json({ error: "Payment failed, try again later." });
+    }
+  });
 
 //Logout
 router.get('/logout', (req, res) => {
