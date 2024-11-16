@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const SignUp = require('../models/SignUp');
 const Transaction = require('../models/stocktransac');
+const Watchlist = require('../models/Watchlist');
+
 const verifyToken = (req, res, next) => {
     const token = req.cookies.access_token; // assuming you're using cookies
     if (!token) return res.status(401).json("You're not authenticated!");
@@ -111,6 +113,145 @@ router.get('/logout', (req, res) => {
         res.clearCookie('access_token').status(200).json('User Logged Out');
     } catch (error) {
         res.status(500).json({message:  error.message});
+    }
+});
+
+// Add stock to watchlist
+//Working
+router.post('/watchlist/add', async (req, res) => {
+    const { stockname, userId, currentPrice } = req.body;
+    console.log(stockname,userId,currentPrice);
+    // Log the request body for debugging
+    console.log("Request body:", req.body);
+
+    if (!stockname || !userId || currentPrice == null) {
+      return res.status(400).json({ message: 'Invalid stock data' });
+    }
+
+    try {
+        const userWatchlist = await Watchlist.findOne({ userId });
+
+        if (!userWatchlist) {
+            // Create a new watchlist if one doesn't exist
+            const newWatchlist = new Watchlist({
+                userId,
+                stocks: [{ stockname, currentPrice }],
+            });
+            await newWatchlist.save();
+        } else {
+            // Check if the stock already exists
+            const stockExists = userWatchlist.stocks.some(
+                (stock) => stock.stockname === stockname
+            );
+
+            if (stockExists) {
+                return res.status(400).json({ message: 'Stock already in watchlist' });
+            }
+
+            // Add the new stock to the stocks array
+            userWatchlist.stocks.push({ stockname, currentPrice });
+            await userWatchlist.save();
+        }
+
+        res.status(200).json({ message: 'Stock added to watchlist' });
+    } catch (error) {
+        console.error('Error adding to watchlist:', error);
+        res.status(500).json({ message: 'Error adding to watchlist', error: error.message });
+    }
+});
+
+
+
+
+// Remove stock from watchlist
+//Working
+router.post('/watchlist/remove', async (req, res) => {
+    const { stockname, userId } = req.body;
+  
+    if (!stockname || !userId) {
+      return res.status(400).json({ message: 'Invalid stock data' });
+    }
+  
+    try {
+      const userWatchlist = await Watchlist.findOne({ userId });
+  
+      if (!userWatchlist) {
+        return res.status(404).json({ message: "Watchlist not found" });
+      }
+  
+      // Filter out the stock to be removed, but preserve other stocks
+      const updatedStocks = userWatchlist.stocks.filter(
+        (stock) => stock.stockname !== stockname
+      );
+  
+      if (updatedStocks.length === userWatchlist.stocks.length) {
+        return res.status(404).json({ message: "Stock not found in watchlist" });
+      }
+
+      // Only update the stocks array (without triggering full document validation)
+      userWatchlist.stocks = updatedStocks;
+      await userWatchlist.save({ validateModifiedOnly: true });
+
+      res.status(200).json({ message: "Stock removed from watchlist" });
+    } catch (error) {
+      console.error('Error removing from watchlist:', error);
+      res.status(500).json({ message: 'Error removing from watchlist', error: error.message });
+    }
+});
+
+
+// //Update Watchlist
+//   router.put('/watchlist/update', async (req, res) => {
+//     const { stockname, userId, marketPrice } = req.body;
+
+//     if (!stockname || !userId || marketPrice == null) {
+//       return res.status(400).json({ message: 'Invalid stock data' });
+//     }
+
+//     try {
+//       const userWatchlist = await Watchlist.findOne({ userId });
+
+//       if (!userWatchlist) {
+//         return res.status(404).json({ message: 'Watchlist not found' });
+//       }
+
+//       const stockIndex = userWatchlist.stocks.findIndex(
+//         (stock) => stock.stockname === stockname
+//       );
+
+//       if (stockIndex === -1) {
+//         return res.status(404).json({ message: 'Stock not found in watchlist' });
+//       }
+
+//       // Update the market price of the stock
+//       userWatchlist.stocks[stockIndex].marketPrice = marketPrice;
+
+//       await userWatchlist.save();
+//       res.status(200).json({ message: 'Stock market price updated' });
+//     } catch (error) {
+//       console.error('Error updating market price:', error);
+//       res.status(500).json({ message: 'Error updating market price', error: error.message });
+//     }
+// });
+
+// Fetch user's watchlist
+//Working
+router.get('/watchlist', async (req, res) => {
+    try {
+        const userId = req.query.userId; // Use query parameters for userId
+        if (!userId) {
+            return res.status(400).json({ message: "User ID is required" });
+        }
+
+        const userWatchlist = await Watchlist.findOne({ userId });
+        if (!userWatchlist) {
+            return res.status(404).json({ message: "Watchlist not found" });
+        }
+
+        res.status(200).json({ watchlist: userWatchlist.stocks });
+    } catch (error) {
+        console.error('Error fetching watchlist:', error);
+        res.status(500).json({ message: "Error fetching watchlist", error: error.message });
     }
 });
 
