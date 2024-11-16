@@ -20,6 +20,7 @@ const StockTrans = () => {
             quantity,
             price,
           },
+          { withCredentials: true }
           );
           setMessage(response.data.message);
         } catch (error) {
