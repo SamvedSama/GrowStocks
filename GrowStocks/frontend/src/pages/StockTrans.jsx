@@ -19,7 +19,8 @@ const StockTrans = () => {
             stockName,
             quantity,
             price,
-          });
+          },
+          );
           setMessage(response.data.message);
         } catch (error) {
           setMessage(error.response.data.error || "Payment failed.");

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const TransactionSchema = new mongoose.Schema({
-    name: String,
+    userId: { type: String, required: true },
     details:{
         stockName: String,
         quantity: Number,

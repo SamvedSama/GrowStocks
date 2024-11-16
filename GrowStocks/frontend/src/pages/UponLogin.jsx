@@ -144,8 +144,12 @@ const UponLogin = () => {
     navigate(`/buy/${unit.stockname}`);
   };
 
+  const handlebuymutual=(mutual)=>{
+    navigate(`/mutual/${mutual.mutualname}`);
+  };
+
   const handleIPOApply=(ipo)=>{
-    {/**/}
+    navigate(`/ipo/${ipo.mutualname}`);
   };
 
   
@@ -245,7 +249,7 @@ const UponLogin = () => {
               <div className="flex justify-between mt-9">
                 <button
                   className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition ml-auto"
-                  onClick={(event) => {event.stopPropagation();handleBuy(mutual)}}
+                  onClick={(event) => {event.stopPropagation();handlebuymutual(mutual)}}
                 >
                   BUY
                 </button>

@@ -12,6 +12,8 @@ import Myfunds from './pages/Myfunds.jsx'
 import Hamburgernav from './components/Hamburgernav.jsx';
 import Watchlist from './pages/Watchlist.jsx'
 import StockTrans from './pages/StockTrans.jsx';
+import MutualTrans from './pages/MutualTrans.jsx';
+import IPOTrans from './pages/IpoTrans.jsx';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -100,6 +102,20 @@ const router = createBrowserRouter([
     element: (
       <>
         <StockTrans />
+      </> )     
+  },
+  {
+    path: '/mutual/:mutualname',
+    element: (
+      <>
+        <MutualTrans />
+      </> )     
+  },
+  {
+    path: '/ipo/:mutualname',
+    element: (
+      <>
+        <IPOTrans />
       </> )     
   },
   {
