@@ -14,17 +14,20 @@ const UponLogin = () => {
   const [WatchlistData] = useState(initialWatchlist);
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const portfolioValue = 0; // Replace this with your actual value
+  const portfolioValue = 0;
   const [selectedUnit, setselectedUnit] = useState(null);
-  const [isAdded, setIsAdded] = useState(false);
-  const [watchlist, setWatchlist] = useState({});
+  const [watchlist, setWatchlist] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [firstname, setFirstname] = useState('');
+  const [error, setError] = useState(null);
+  const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
 
   const fetchUserData = async () => {
     try {
       const res = await axios.get(url + "/api/auth/user", { withCredentials: true });
       console.log("User data:", res.data);
+      setUserId(res.data._id);  
       setFirstname(res.data.firstname);  // Store the firstname
     } catch (err) {
       console.error("Error fetching user data:", err);
@@ -35,20 +38,79 @@ const UponLogin = () => {
     fetchUserData(); // Fetch user data when the component mounts
   }, []);
 
-
-
-  const updateWatchlist = (stock) => {
-
-    setWatchlist((prevWatchlist) => {
-      if(prevWatchlist[stock.stockname]){
-        const newWatchlist={...prevWatchlist};
-        delete newWatchlist[stock.stockname];
-        return newWatchlist;
+  useEffect(() => {
+    if (userId) {
+      fetchWatchlist();  // Fetch the watchlist after userId is available
+    }
+  }, [userId]);
+  
+  const fetchWatchlist = async () => {
+    if (!userId) {
+      console.error("User ID is not available");
+      return;
+    }
+  
+    setIsLoading(true); // Set loading to true when fetching watchlist
+  
+    try {
+      const response = await axios.get(`${url}/api/auth/watchlist`, {
+        params: { userId },
+        headers: { 'Content-Type': 'application/json' },
+      });
+  
+      if (response.status === 200) {
+        setWatchlist(response.data.watchlist || []); // Set watchlist to state
+      } else {
+        console.error('Unexpected response status:', response.status);
       }
-      else{
-        return {...prevWatchlist,[stock.stockname]:stock}
+    } catch (error) {
+      console.error('Error fetching watchlist:', error);
+      setError("Failed to fetch watchlist.");
+    } finally {
+      setIsLoading(false); // Set loading to false when done
+    }
+  };
+  
+  const updateWatchlist = async (stock) => {
+    if (!userId) {
+      console.error('User ID is not available');
+      return;
+    }
+  
+    const updateState = (add) => {
+      setWatchlist((prevWatchlist) => {
+        if (add) {
+          return [...prevWatchlist, stock]; // Add stock to array
+        }
+        return prevWatchlist.filter((item) => item.stockname !== stock.stockname); // Remove stock
+      });
+    };
+  
+    try {
+      // Check if the stock is already in the watchlist
+      const stockExists = watchlist.some((item) => item.stockname === stock.stockname);
+      updateState(!stockExists);  // Update the state optimistically
+  
+      const response = await axios.post(
+        `${url}/api/auth/watchlist/${stockExists ? 'remove' : 'add'}`,
+        { 
+          userId, 
+          stockname: stock.stockname, 
+          currentPrice: stock.currentPrice
+        },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+  
+      if (response.status >= 200 && response.status < 300) {
+        console.log(stockExists ? 'Stock removed from watchlist' : 'Stock added to watchlist');
+      } else {
+        console.error('Unexpected response status:', response.status, response.data);
       }
-  });
+    } catch (error) {
+      console.error('Error updating watchlist:', error);
+      setError("Error updating watchlist.");
+      updateState(watchlist.some((item) => item.stockname === stock.stockname)); // Revert the optimistic update on error
+    }
   };
 
   const openStockInfo = (stock) => {
@@ -156,12 +218,11 @@ const UponLogin = () => {
                   <p>Realized P&L: {stock.realizedPL}</p>
                 </div>
               </div>
-              <div className="absolute top-2 right-2 hover:scale:110">
-                <button onClick={(event)=>{event.stopPropagation(); updateWatchlist(stock) }}>
-                  {watchlist[stock.stockname] ? <CgBookmark className="transition-transform duration-200 hover:scale-150" /> : <CgMathPlus className="transition-transform duration-200 hover:scale-150" />}
+              <div className="absolute top-2 right-2 hover:scale-110">
+                <button onClick={(event) => { event.stopPropagation(); updateWatchlist(stock); }}>
+                  {watchlist.some((item) => item.stockname === stock.stockname) ? (<CgBookmark className="transition-transform duration-200 hover:scale-150" />) : (<CgMathPlus className="transition-transform duration-200 hover:scale-150" />)}
                 </button>
               </div>
-
               <div className="flex justify-between mt-4">
                 <button
                   className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition ml-auto"

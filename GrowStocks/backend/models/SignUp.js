@@ -25,20 +25,7 @@ const SignUpSchema = new mongoose.Schema({
     balance: {
         type: Number,
         default: 0
-    },
-    stocks: {
-        type: Object,
-        default: {}
-    },
-    mutualFunds: {
-        type: Object,
-        default: {}
-    },
-    ipos: {
-        type: Object,
-        default: {}
     }
-
 }, {timestamps: true});
 
 module.exports = mongoose.model("SignUp", SignUpSchema);
