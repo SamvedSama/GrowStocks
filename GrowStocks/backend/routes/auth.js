@@ -295,14 +295,14 @@ router.get('/watchlist', async (req, res) => {
         if (!userId) {
             return res.status(400).json({ message: "User ID is required" });
         }
-
+    
         const userWatchlist = await Watchlist.findOne({ userId });
         if (!userWatchlist) {
             return res.status(404).json({ message: "Watchlist not found" });
         }
-
+    
         res.status(200).json({ watchlist: userWatchlist.stocks });
-    } catch (error) {
+        } catch (error) {
         console.error('Error fetching watchlist:', error);
         res.status(500).json({ message: "Error fetching watchlist", error: error.message });
     }

@@ -15,7 +15,7 @@ export const stocks = [
   ];
 
   export const WatchlistData = [
-    { mutualname: 'AAPL', minprice: 150, oneYreturns: 145,  },
-    { mutualname: 'GOOGL', minprice: 2750, oneYreturns: 2700,  },
-    { mutualname: 'TSLA', minprice: 800, oneYreturns: 780,  },
+    { stockname: 'AAPL', minprice: 150, oneYreturns: 145,  },
+    { stockname: 'GOOGL', minprice: 2750, oneYreturns: 2700,  },
+    { stockname: 'TSLA', minprice: 800, oneYreturns: 780,  },
   ];

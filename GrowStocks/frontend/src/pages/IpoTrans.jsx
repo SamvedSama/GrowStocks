@@ -87,10 +87,8 @@ const IPOTrans = () => {
           Invest
         </button>
         {message && (
-          <p
-            className={`mt-4 text-sm ${isError ? "text-red-500" : "text-green-500"}`}
-          >
-            {message}
+          <p className={`mt-4 text-sm ${isError ? "text-red-500" : "text-green-500"}`}>
+          {message}
           </p>
         )}
       </form>
