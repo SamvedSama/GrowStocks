@@ -308,4 +308,57 @@ router.get('/watchlist', async (req, res) => {
     }
 });
 
+router.post('/deposit', verifyToken, async (req, res) => {
+    const { amount } = req.body;
+    try {
+      // Assuming the user is authenticated and their ID is available
+      const user = await SignUp.findById(req.user.id); // Use your authentication method
+      if (user) {
+        user.balance += amount; // Add the deposit amount to the balance
+        await user.save();
+        res.status(200).send({ message: 'Deposit successful', balance: user.balance });
+      } else {
+        res.status(404).send({ message: 'User not found' });
+      }
+    } catch (error) {
+      res.status(500).send({ message: 'Error depositing funds' });
+    }
+  });
+  
+  // Withdraw funds
+  router.post('/withdraw', verifyToken, async (req, res) => {
+    const { amount } = req.body;
+    try {
+      const user = await SignUp.findById(req.user.id); // Use your authentication method
+      if (user) {
+        if (user.balance >= amount) {
+          user.balance -= amount; // Deduct the withdrawal amount from the balance
+          await user.save();
+          res.status(200).send({ message: 'Withdrawal successful', balance: user.balance });
+        } else {
+          res.status(400).send({ message: 'Insufficient balance' });
+        }
+      } else {
+        res.status(404).send({ message: 'User not found' });
+      }
+    } catch (error) {
+      res.status(500).send({ message: 'Error withdrawing funds' });
+    }
+  });
+  
+  // Get the current balance
+  router.get('/balance', verifyToken, async (req, res) => {
+    try {
+      const user = await SignUp.findById(req.user.id); // Use your authentication method
+      if (user) {
+        res.status(200).send({ balance: user.balance });
+      } else {
+        res.status(404).send({ message: 'User not found' });
+      }
+    } catch (error) {
+      res.status(500).send({ message: 'Error fetching balance' });
+    }
+  });
+
+
 module.exports = router;
