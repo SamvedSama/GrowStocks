@@ -39,6 +39,9 @@ const Hamburgernav = () => {
                 <Link to="/watchlist">
                   <li className="p-2 text-slate-950 hover:bg-gray-100 cursor-pointer">Watchlist</li>
                 </Link>
+                <Link to="/myfunds">
+                  <li className="p-2 text-slate-950 hover:bg-gray-100 cursor-pointer">My Funds</li>
+                </Link>
               </ul>
             </div>
           )}
