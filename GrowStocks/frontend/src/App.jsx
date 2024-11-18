@@ -14,6 +14,7 @@ import Watchlist from './pages/Watchlist.jsx'
 import StockTrans from './pages/StockTrans.jsx';
 import MutualTrans from './pages/MutualTrans.jsx';
 import IPOTrans from './pages/IpoTrans.jsx';
+import ContactUs from './pages/ContactUs.jsx';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -52,6 +53,15 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <About />
+      </>
+    ),
+  },
+  {
+    path: '/contactus',
+    element: (
+      <>
+        <Navbar />
+        <ContactUs />
       </>
     ),
   },

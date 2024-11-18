@@ -11,6 +11,7 @@ const Navbar = () => {
         <div>
             <ul className="flex font-roboto font-bold">
                 <li className="px-8 text-xl text-white hover:text-blue-700"><Link to="/about">About</Link></li>
+                <li className="px-8 text-xl text-white hover:text-blue-700"><Link to="/contactus">Contact Us</Link></li>
                 <li className="px-8 text-xl flex font-roboto font-bold text-white hover:text-blue-700"><Link to="/signup">SignUp</Link></li>
                 <li className="flex font-roboto font-bold px-8 text-xl text-white hover:text-blue-700"><Link to="/login">Login</Link></li>
             </ul>
