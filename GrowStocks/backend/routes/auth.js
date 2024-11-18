@@ -252,40 +252,17 @@ router.post('/watchlist/remove', async (req, res) => {
     }
 });
 
-
-// //Update Watchlist
-//   router.put('/watchlist/update', async (req, res) => {
-//     const { stockname, userId, marketPrice } = req.body;
-
-//     if (!stockname || !userId || marketPrice == null) {
-//       return res.status(400).json({ message: 'Invalid stock data' });
-//     }
-
-//     try {
-//       const userWatchlist = await Watchlist.findOne({ userId });
-
-//       if (!userWatchlist) {
-//         return res.status(404).json({ message: 'Watchlist not found' });
-//       }
-
-//       const stockIndex = userWatchlist.stocks.findIndex(
-//         (stock) => stock.stockname === stockname
-//       );
-
-//       if (stockIndex === -1) {
-//         return res.status(404).json({ message: 'Stock not found in watchlist' });
-//       }
-
-//       // Update the market price of the stock
-//       userWatchlist.stocks[stockIndex].marketPrice = marketPrice;
-
-//       await userWatchlist.save();
-//       res.status(200).json({ message: 'Stock market price updated' });
-//     } catch (error) {
-//       console.error('Error updating market price:', error);
-//       res.status(500).json({ message: 'Error updating market price', error: error.message });
-//     }
-// });
+//Show Stocks
+//Working
+router.get('/stocks', async (req, res) => {
+    try {
+        const stocks = await Transaction.find();
+        res.status(200).json(stocks);
+    } catch (error) {
+        console.error('Error fetching stocks:', error);
+        res.status(500).json({ message: "Error fetching stocks", error: error.message });
+    }
+});
 
 // Fetch user's watchlist
 //Working

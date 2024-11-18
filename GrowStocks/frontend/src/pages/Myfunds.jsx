@@ -1,17 +1,21 @@
-import React from 'react';
-import {useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import VirtualKeyboard from '../components/Keyboard';
-// import Hamburgernav from '../components/Hamburgernav';
+import Hamburgernav from '../components/Hamburgernav';
 import {Link} from 'react-router-dom'
+import axios from 'axios';
+import { url } from '../url';
 const Myfunds = () => {
   
     const [isOpen, setIsOpen]=useState(false);
     const [isOpen2, setIsOpen2]=useState(false);
     const [isOpenham, setIsOpenham]=useState(false);
+    const [balance, setBalance] = useState(0);
+    
 
     const toggleMenu = () => {
       setIsOpenham(!isOpenham);
     };
+
 
 
     const togglewithdraw = () => {
@@ -22,10 +26,26 @@ const Myfunds = () => {
     const toggleadd = () => {
       setIsOpen2(!isOpen2);
     };
-   let amountInBank=1234;
-  return (
+
+    const fetchBankAmount = async () => {
+      try {
+        const response = await axios.get(url + '/api/auth/balance', { withCredentials: true });
+        setBalance(response.data.balance);
+      } catch (error) {
+        console.error('Error fetching bank amount:', error);
+      }
+    };
+  
+    useEffect(() => {
+      fetchBankAmount();
+    }, []);
+   
+    
+  
+   return (
     
     <section className="bg-black min-h-screen text-white">
+      <Hamburgernav/>
       <div className="px-6 py-4 mx-auto">
         {/* Top Bar with Date and Market Indexes */}
         <div className="flex justify-between items-center text-sm mb-4">
@@ -35,36 +55,13 @@ const Myfunds = () => {
 
         {/* Sidebar Icon and Title */}
         <div className="flex justify-between items-center mb-4">
-          <div className="relative">
-        {/* Hamburger icon */}
-            <div className="cursor-pointer flex flex-col space-y-1" onClick={toggleMenu}>
-              <div className="w-8 h-1 bg-white"></div>
-              <div className="w-8 h-1 bg-white"></div>
-              <div className="w-8 h-1 bg-white"></div>
-            </div>
-
-        {/* Menu items */}
-          {isOpenham && (
-            <ul className="absolute left-0 mt-2 bg-white rounded-lg shadow-lg w-40">
-              <Link to="/mystocks"><li className="p-2 text-slate-950 hover:bg-gray-100 cursor-pointer">
-                My stocks
-              </li></Link>
-              <Link to="/mutual"><li className="p-2 text-slate-950 hover:bg-gray-100 cursor-pointer">
-                My mutual funds
-              </li></Link>
-              <Link to="/watchlist"><li className="p-2 text-slate-950 hover:bg-gray-100 cursor-pointer">
-                Watchlist
-              </li></Link>
-            </ul>
-          )}
-        </div>
           <h1 className="text-4xl font-semibold mx-auto">MY FUNDS</h1>
         </div>
 
         {/* Available Amount */}
         <div className="text-center my-6">
           <p className="text-lg font-light mx-auto">AVAILABLE AMOUNT:</p>
-          <p className="text-4xl font-bold">{amountInBank}</p>
+          <p className="text-4xl font-bold">&#8377; {balance}</p>
         </div>
 
         {/* Buttons */}
@@ -81,7 +78,7 @@ const Myfunds = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 ">
           <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 h-3/5 relative">            
               <p className="mt-2 text-black font-bold ">Enter the amount you want to withdraw</p><br></br>
-              <VirtualKeyboard/>  
+              <VirtualKeyboard action="withdraw" fetchBankAmount={fetchBankAmount}/>  
               
               <button
                 className="absolute top-0 right-2 mt-4  text-black py-2 px-4 rounded  "
@@ -96,8 +93,8 @@ const Myfunds = () => {
 {isOpen2 && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 ">
           <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 h-3/5 relative">            
-              <p className="mt-2 text-black font-bold ">Enter the amount you want to withdraw</p><br></br>
-              <VirtualKeyboard/>  
+              <p className="mt-2 text-black font-bold ">Enter the amount you want to add</p><br></br>
+              <VirtualKeyboard action="deposit" fetchBankAmount={fetchBankAmount}/>  
               
               <button
                 className="absolute top-0 right-2 mt-4  text-black py-2 px-4 rounded  "
