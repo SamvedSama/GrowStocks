@@ -16,6 +16,7 @@ import MutualTrans from './pages/MutualTrans.jsx';
 import IPOTrans from './pages/IpoTrans.jsx';
 import ContactUs from './pages/ContactUs.jsx';
 import Myipos from './pages/Myipos.jsx';
+import StockSell from './pages/StockSell.jsx';
 
 const router = createBrowserRouter([
   {
@@ -119,6 +120,12 @@ const router = createBrowserRouter([
     path: '/buy/:stockname',
     element: (
         <StockTrans />     
+       )     
+  },
+  {
+    path: '/sell/:stockname',
+    element: (
+        <StockSell/>
        )     
   },
   {

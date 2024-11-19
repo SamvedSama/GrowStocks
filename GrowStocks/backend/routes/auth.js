@@ -102,24 +102,21 @@ router.post("/payment", verifyToken, async (req, res) => {
       return res.status(400).json({ error: "Quantity and price must be valid numbers" });
     }
 
-    //totalAmount shoould be lesser than user balance
-
     const user = await SignUp.findById(userId);
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
-  
     const totalAmount = quantity * price;
-
-    user.balance-=totalAmount;
-    await user.save();
-
 
     if (user.balance < totalAmount) {
       return res.status(400).json({ error: "Insufficient balance" });
+    }else{
+      user.balance-=totalAmount;
+      await user.save();
     }
+    
   
     try {
       const transaction = new Transaction({ 
@@ -135,6 +132,45 @@ router.post("/payment", verifyToken, async (req, res) => {
       res.status(500).json({ error: "Payment failed, try again later." });
     }
   });
+
+router.post("/sell", verifyToken, async (req, res) => {
+    const { stockName, quantity, price } = req.body;
+    const userId = req.user.id;
+    if (!stockName || !quantity || !price) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+    if (quantity <= 0 || price <= 0) {
+      return res.status(400).json({ error: "Quantity and price must be positive numbers" });
+    }
+    if (isNaN(quantity) || isNaN(price)) {
+      return res.status(400).json({ error: "Quantity and price must be valid numbers" });
+    }
+    const stocks = await Transaction.find({ userId });
+    const stock = stocks.find((stock) => stock.details.stockName === stockName);
+    if (!stock) {
+      return res.status(404).json({ error: "Stock not found" });
+    }
+    if (stock.details.quantity < quantity) {
+      return res.status(400).json({ error: "Insufficient quantity" });
+    }
+    stock.details.quantity -= quantity;
+    await stock.save();
+    if(stock.details.quantity===0){
+        await Transaction.findByIdAndDelete(stock._id);
+    }
+
+    const user = await SignUp.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    const totalAmount = quantity * price;
+    user.balance+=totalAmount;
+    await user.save();
+    res.status(200).json({ message: "Transaction successful!" });
+    if (user.balance < totalAmount) {
+      return res.status(400).json({ error: "Insufficient balance" });
+    }
+});
 
 router.post("/investment",verifyToken, async (req, res) => {
     try {
@@ -183,6 +219,21 @@ router.post("/investment",verifyToken, async (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     }
     });
+
+router.get("/mutuals", verifyToken, async (req, res) => {
+    try {
+      const userId = req.user.id; // Use query parameters for userId
+      if (!userId) {
+          return res.status(400).json({ message: "User ID is required" });
+      }
+      const mutuals = await Investment.find({ userId });
+      res.status(200).json(mutuals);
+
+    } catch (error) {
+        console.error("Error fetching mutuals:", error);
+        res.status(500).json({ message: "Error fetching mutuals", error: error.message });
+    }
+})
 
  router.post("/ipo", verifyToken, async (req, res) => {
     
