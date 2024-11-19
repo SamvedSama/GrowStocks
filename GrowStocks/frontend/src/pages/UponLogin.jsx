@@ -15,7 +15,7 @@ const UponLogin = () => {
   const [WatchlistData] = useState(initialWatchlist);
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const portfolioValue = 0;
+  const [portfolioValue,setPortfoliovalue] = useState(0);
   const [selectedUnit, setselectedUnit] = useState(null);
   const [watchlist, setWatchlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,6 +30,7 @@ const UponLogin = () => {
       console.log("User data:", res.data);
       setUserId(res.data._id);  
       setFirstname(res.data.firstname);  // Store the firstname
+      setPortfoliovalue(res.data.balance)
     } catch (err) {
       console.error("Error fetching user data:", err);
     }
@@ -45,6 +46,7 @@ const UponLogin = () => {
     }
   }, [userId]);
   
+
   const fetchWatchlist = async () => {
     if (!userId) {
       console.error("User ID is not available");
@@ -173,7 +175,7 @@ const UponLogin = () => {
     {/* 2nd section */}
 
     <div className='h-20 bg-white mt-5 flex justify-center items-center'>
-      <p className='text-4xl'>Hello <span className='bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-yellow-500 to-yellow-700'>{firstname}</span>, Your portfolio value is {isVisible ? `$${portfolioValue}` : '$******'}</p>
+      <p className='text-4xl'>Hello <span className='bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-yellow-500 to-yellow-700'>{firstname}</span>, Your portfolio value is {isVisible ? `₹${portfolioValue}` : '$******'}</p>
       <span><button className=' text-4xl p-2 rounded-full text-slate-950 hover:bg-blue-600 transition duration-300' onClick={toggleVisibility}>{isVisible? <FaEyeSlash /> : <FaEye />}</button></span>
     </div>
     <div className="grid grid-cols-3 gap-4 mt-4 text-white divide-x">
@@ -210,7 +212,7 @@ const UponLogin = () => {
             </div>  
           ))}
       </div>
-      <div>
+      <div className='mb-8'>
         <span className="flex justify-center text-3xl ">Mutual Funds</span>
         <br />
         {mutuals.map((mutual, index) => (
@@ -233,7 +235,7 @@ const UponLogin = () => {
               </div>
             </div>  
           ))}</div>
-        <div>
+        <div className='mb-8'>
         <span className="flex justify-center text-3xl">IPOs</span>
         <br />
         {mutuals.map((mutual, index) => (
