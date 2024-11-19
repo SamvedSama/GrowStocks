@@ -3,6 +3,7 @@ import axios from "axios";
 import { url } from "../url";
 import { useNavigate } from "react-router-dom";
 
+
 const Myipos = () => {
   const [selectedUnit, setSelectedUnit] = useState(null);
   const [ipos, setIpos] = useState([]);
@@ -10,7 +11,7 @@ const Myipos = () => {
   const navigate = useNavigate();
 
   const handleBuyIPO = (ipo) => {
-    navigate("/ipo/:mutualname");
+    navigate(`/ipo/${ipo.details.ipoName}`);
   }
   // Fetch IPO investments from the backend
   const showIpos = async () => {

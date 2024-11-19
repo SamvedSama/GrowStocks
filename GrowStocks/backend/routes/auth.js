@@ -182,7 +182,7 @@ router.post("/investment",verifyToken, async (req, res) => {
     const { ipoName, quantity, pricePerQuantity, totalAmount} = req.body;
     const userId = req.user.id;
       
-    if (!ipoName || !quantity || !pricePerQuantity || !totalAmount || !userId) {
+    if (!quantity || !pricePerQuantity || !totalAmount || !userId) {
         return res.status(400).json({ error: "All fields are required" });
     }
 
