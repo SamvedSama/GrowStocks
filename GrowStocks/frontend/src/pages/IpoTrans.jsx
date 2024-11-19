@@ -3,11 +3,14 @@ import axios from "axios";
 import { url } from "../url";
 
 const IPOTrans = () => {
-  const [ipoName, setIpoName] = useState("");
   const [quantity, setQuantity] = useState("");
   const [pricePerQuantity, setPricePerQuantity] = useState("");
   const [message, setMessage] = useState(""); // To store success or error messages
   const [isError, setIsError] = useState(false); // To distinguish success from error
+
+  const path = window.location.pathname; // Gets '/buy/AAPL'
+  const segments = path.split('/'); // Splits into ['', 'buy', 'AAPL']
+  const stockSymbol = segments[2]; // Extracts 'AAPL'
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -45,9 +48,8 @@ const IPOTrans = () => {
         <input
           type="text"
           id="ipoName"
-          className="w-full p-2 border rounded mb-4"
-          value={ipoName}
-          onChange={(e) => setIpoName(e.target.value)}
+          className="w-full p-2 border rounded mb-4 bg-gray-400 cursor-not-allowed"
+          value={stockSymbol}
           placeholder="Enter IPO Name"
           required
         />
