@@ -94,7 +94,28 @@ router.post("/payment", verifyToken, async (req, res) => {
       return res.status(400).json({ error: "All fields are required" });
     }
   
+    if (quantity <= 0 || price <= 0) {
+      return res.status(400).json({ error: "Quantity and price must be positive numbers" });
+    }
+
+    if (isNaN(quantity) || isNaN(price)) {
+      return res.status(400).json({ error: "Quantity and price must be valid numbers" });
+    }
+
+    //totalAmount shoould be lesser than user balance
+
+    const user = await SignUp.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+  
     const totalAmount = quantity * price;
+
+    if (user.balance < totalAmount) {
+      return res.status(400).json({ error: "Insufficient balance" });
+    }
   
     try {
       const transaction = new Transaction({ 
@@ -121,7 +142,31 @@ router.post("/investment",verifyToken, async (req, res) => {
           .status(400)
           .json({ error: "SIP day must be between 1 and 28 for SIP investments." });
       }
+
+      if (investmentType !== "one-time" && investmentType !== "sip") {
+        return res.status(400).json({ error: "Invalid investment type." });
+      }
   
+      if (investmentType === "one-time" && sipDay) {
+        return res
+          .status(400)
+          .json({ error: "SIP day should not be provided for one-time investments." });
+      }
+  
+      if (isNaN(amount) || amount <= 0) {
+        return res.status(400).json({ error: "Amount must be a positive number." });
+      }
+
+      const user = await SignUp.findById(userId);
+  
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+  
+      if (user.balance < amount) {
+        return res.status(400).json({ error: "Insufficient balance" });
+      }
+      
       const investment = new Investment({ userId, investmentType, amount, sipDay });
       await investment.save();
   
@@ -139,6 +184,24 @@ router.post("/investment",verifyToken, async (req, res) => {
       
     if (!ipoName || !quantity || !pricePerQuantity || !totalAmount || !userId) {
         return res.status(400).json({ error: "All fields are required" });
+    }
+
+    if (quantity <= 0 || pricePerQuantity <= 0 || totalAmount <= 0) {
+        return res.status(400).json({ error: "Quantity, price per quantity, and total amount must be positive numbers" });
+    }
+    
+    if (isNaN(quantity) || isNaN(pricePerQuantity) || isNaN(totalAmount)) {
+        return res.status(400).json({ error: "Quantity, price per quantity, and total amount must be valid numbers" });
+    }
+    
+    const user = await SignUp.findById(userId);
+    
+    if (!user) {
+        return res.status(404).json({ error: "User not found" });
+    }
+    
+    if (user.balance < totalAmount) {
+        return res.status(400).json({ error: "Insufficient balance" });
     }
       
     try {

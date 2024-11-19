@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider,Navigate } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider,Navigate,Outlet } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -16,6 +16,12 @@ import MutualTrans from './pages/MutualTrans.jsx';
 import IPOTrans from './pages/IpoTrans.jsx';
 import ContactUs from './pages/ContactUs.jsx';
 import Myipos from './pages/Myipos.jsx';
+
+const isAuthenticated = false;
+
+const ProtectedRoute = ({ children }) => {
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
+};
 
 const router = createBrowserRouter([
   {
@@ -70,19 +76,23 @@ const router = createBrowserRouter([
   {
     path: '/mystocks',
     element: (
+      <ProtectedRoute>
       <>
         <Hamburgernav/>
         <Mystocks />
       </>
+      </ProtectedRoute>
     ),
   },
   {
     path: '/mutual',
     element: (
+      <ProtectedRoute>
       <>
         <Hamburgernav />
         <Mutual />
       </>
+      </ProtectedRoute>
     ),
   },
   {
@@ -97,47 +107,52 @@ const router = createBrowserRouter([
   {
     path: '/welcome',
     element: (
-      <>
+      <ProtectedRoute>
         <UponLogin/>
-      </>
+      </ProtectedRoute>
+      
     ),
   },
   {
     path:'/myfunds',
     element: (
-        <>
-        {/* <Navbar/> */}
-        <Myfunds/>
-        </>    )
+      <ProtectedRoute>
+         <Myfunds/>
+      </ProtectedRoute>
+   
+    ),
   },
   {
     path:'/watchlist',
     element: (
+      <ProtectedRoute>
         <>
         <Hamburgernav/>
         <Watchlist/>
-        </>    )
+        </>
+      </ProtectedRoute>)
   },
   {
     path: '/buy/:stockname',
     element: (
-      <>
+      <ProtectedRoute>
         <StockTrans />
-      </> )     
+      </ProtectedRoute>  
+       )     
   },
   {
     path: '/mutual/:mutualname',
     element: (
-      <>
+      <ProtectedRoute>
         <MutualTrans />
-      </> )     
+      </ProtectedRoute> )     
   },
   {
     path: '/ipo/:mutualname',
     element: (
-      <>
+      <ProtectedRoute>
         <IPOTrans />
-      </> )     
+      </ProtectedRoute> )     
   },
   {
     path: '*',

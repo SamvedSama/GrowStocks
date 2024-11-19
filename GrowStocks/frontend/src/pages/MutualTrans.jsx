@@ -34,8 +34,8 @@ const MutualTrans = () => {
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto bg-white rounded shadow">
-      <h1 className="text-2xl font-bold mb-4">Mutual Fund Investment</h1>
+    <div className="p-4 h-96 max-w-md mx-auto my-36 bg-white rounded shadow">
+      <h1 className="text-2xl font-bold mb-4 text-center">Mutual Fund Investment</h1>
       <form onSubmit={handleSubmit}>
         {/* Investment Type */}
         <div className="mb-4">
