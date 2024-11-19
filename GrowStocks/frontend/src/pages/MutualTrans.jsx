@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { url } from "../url"; // Ensure this points to your backend URL
-
+import { useNavigate } from "react-router-dom";
 const MutualTrans = () => {
   const [investmentType, setInvestmentType] = useState("one-time");
   const [amount, setAmount] = useState("");
   const [sipDay, setSipDay] = useState(1);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,6 +29,7 @@ const MutualTrans = () => {
       },
       { withCredentials: true });
       setMessage(response.data.message);
+      navigate("/mutual");
     } catch (err) {
       setError(err.response?.data?.error || "Something went wrong!");
     }

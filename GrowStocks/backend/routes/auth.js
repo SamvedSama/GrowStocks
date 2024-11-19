@@ -113,6 +113,10 @@ router.post("/payment", verifyToken, async (req, res) => {
   
     const totalAmount = quantity * price;
 
+    user.balance-=totalAmount;
+    await user.save();
+
+
     if (user.balance < totalAmount) {
       return res.status(400).json({ error: "Insufficient balance" });
     }
@@ -167,6 +171,9 @@ router.post("/investment",verifyToken, async (req, res) => {
         return res.status(400).json({ error: "Insufficient balance" });
       }
       
+      user.balance -= amount;
+      await user.save();
+
       const investment = new Investment({ userId, investmentType, amount, sipDay });
       await investment.save();
   
@@ -203,6 +210,9 @@ router.post("/investment",verifyToken, async (req, res) => {
     if (user.balance < totalAmount) {
         return res.status(400).json({ error: "Insufficient balance" });
     }
+
+    user.balance -= totalAmount;
+    await user.save();
       
     try {
         const investment = new IPOInvestment({

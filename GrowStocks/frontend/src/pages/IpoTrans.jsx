@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { url } from "../url";
+import { useNavigate } from "react-router-dom";
 
 const IPOTrans = () => {
   const [quantity, setQuantity] = useState(0);
@@ -11,6 +12,7 @@ const IPOTrans = () => {
   const path = window.location.pathname; // Gets '/buy/AAPL'
   const segments = path.split('/'); // Splits into ['', 'buy', 'AAPL']
   const ipoName = segments[2]; // Extracts 'AAPL'
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -29,9 +31,11 @@ const IPOTrans = () => {
       );
       setIsError(false);
       setMessage(response.data.message || "Investment successful.");
+      navigate("/myipos");
     } catch (err) {
         setMessage(err.response?.data?.error || "Payment failed.");
     }
+
   };
 
   return (
