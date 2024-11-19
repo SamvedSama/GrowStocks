@@ -6,9 +6,7 @@ const TransactionSchema = new mongoose.Schema({
         stockName: String,
         quantity: Number,
         totalAmount: Number,
-         unrealizedpandl: { type: Number,
-          default:0,
-        } ,
+        unrealizedpandl: { type: Number, default:0},
         date: { type: Date, default: Date.now }
     },
   });

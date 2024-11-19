@@ -11,9 +11,9 @@ const StockTrans = () => {
 
     const path = window.location.pathname; // Gets '/buy/AAPL'
     const segments = path.split('/'); // Splits into ['', 'buy', 'AAPL']
-    const stockSymbol = segments[2]; // Extracts 'AAPL'
+    const stockName = segments[2]; // Extracts 'AAPL'
 
-    const stock = stocks.find((stock) => stock.stockname === stockSymbol);
+    const stock = stocks.find((stock) => stock.stockname === stockName);
 
     if (!stock) {
         return <div>Stock not found</div>;
@@ -56,7 +56,7 @@ const StockTrans = () => {
               <input
                 type="text"
                 readonly
-                value={stockSymbol}
+                value={stockName}
                 className="w-full bg-gray-400 px-3 py-2 border rounded cursor-not-allowed"
                 required
               />

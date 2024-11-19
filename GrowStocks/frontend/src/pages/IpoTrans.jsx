@@ -3,18 +3,18 @@ import axios from "axios";
 import { url } from "../url";
 
 const IPOTrans = () => {
-  const [quantity, setQuantity] = useState("");
-  const [pricePerQuantity, setPricePerQuantity] = useState("");
+  const [quantity, setQuantity] = useState(0);
+  const [pricePerQuantity, setPricePerQuantity] = useState(0);
   const [message, setMessage] = useState(""); // To store success or error messages
   const [isError, setIsError] = useState(false); // To distinguish success from error
 
   const path = window.location.pathname; // Gets '/buy/AAPL'
   const segments = path.split('/'); // Splits into ['', 'buy', 'AAPL']
-  const stockSymbol = segments[2]; // Extracts 'AAPL'
+  const ipoName = segments[2]; // Extracts 'AAPL'
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!ipoName || !quantity || !pricePerQuantity) {
+    if (!quantity || !pricePerQuantity) {
         setIsError(true);
         setMessage("All fields are required."); 
         return;
@@ -24,7 +24,7 @@ const IPOTrans = () => {
 
     try {
       const response = await axios.post(url+"/api/auth/ipo",
-        { ipoName, quantity, pricePerQuantity, totalAmount},
+        {ipoName, quantity, pricePerQuantity, totalAmount},
         { withCredentials: true } // Ensure the token is sent
       );
       setIsError(false);
@@ -49,9 +49,8 @@ const IPOTrans = () => {
           type="text"
           id="ipoName"
           className="w-full p-2 border rounded mb-4 bg-gray-400 cursor-not-allowed"
-          value={stockSymbol}
+          value={ipoName}
           placeholder="Enter IPO Name"
-          required
         />
 
         <label htmlFor="quantity" className="block font-medium mb-2">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios"; // Ensure axios is imported
 import { url } from "../url";
-import { Navigate,useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 
 const Mystocks = () => {
   const [selectedUnit, setSelectedUnit] = useState(null);
@@ -35,7 +35,7 @@ const Mystocks = () => {
   };
 
   const handleBuy = (unit) => {
-    navigate(`/buy/${unit.stockname}`);
+    navigate(`/buy/${unit.details.stockName}`);
   };
  
   return (
