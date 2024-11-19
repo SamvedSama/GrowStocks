@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { url } from "../url";
 import { stocks } from "../../constant";
+import { useNavigate } from "react-router-dom"; 
 
 const StockTrans = () => {
     const [quantity, setQuantity] = useState(0);
@@ -12,6 +13,7 @@ const StockTrans = () => {
     const path = window.location.pathname; // Gets '/buy/AAPL'
     const segments = path.split('/'); // Splits into ['', 'buy', 'AAPL']
     const stockName = segments[2]; // Extracts 'AAPL'
+    const navigate = useNavigate();
 
     const stock = stocks.find((stock) => stock.stockname === stockName);
 
@@ -39,6 +41,8 @@ const StockTrans = () => {
           { withCredentials: true }
           );
           setMessage(response.data.message);
+          navigate("/mystocks");
+          
  
         } catch (error) {
           setMessage(error.response.data.error || "Payment failed.");
