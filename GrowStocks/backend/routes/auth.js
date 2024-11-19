@@ -178,6 +178,7 @@ router.post("/investment",verifyToken, async (req, res) => {
     });
 
  router.post("/ipo", verifyToken, async (req, res) => {
+    
     const { ipoName, quantity, pricePerQuantity, totalAmount} = req.body;
     const userId = req.user.id;
       
@@ -325,6 +326,16 @@ router.get('/stocks', async (req, res) => {
         console.error('Error fetching stocks:', error);
         res.status(500).json({ message: "Error fetching stocks", error: error.message });
     }
+});
+
+router.get('/findipos', async (req, res) => {
+  try {
+      const ipos = await IPOInvestment.find();
+      res.status(200).json(ipos);
+  } catch (error) {
+      console.error('Error fetching stocks:', error);
+      res.status(500).json({ message: "Error fetching stocks", error: error.message });
+  }
 });
 
 // Fetch user's watchlist

@@ -15,6 +15,7 @@ import StockTrans from './pages/StockTrans.jsx';
 import MutualTrans from './pages/MutualTrans.jsx';
 import IPOTrans from './pages/IpoTrans.jsx';
 import ContactUs from './pages/ContactUs.jsx';
+import Myipos from './pages/Myipos.jsx';
 
 const isAuthenticated = false;
 
@@ -88,10 +89,19 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
       <>
-        <Navbar />
+        <Hamburgernav />
         <Mutual />
       </>
       </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/myipos',
+    element: (
+      <>
+        <Hamburgernav />
+        <Myipos />
+      </>
     ),
   },
   {

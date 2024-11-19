@@ -40,7 +40,14 @@ const Myfunds = () => {
       fetchBankAmount();
     }, []);
    
-    
+    // const latestTransactions = async () => {
+    //   try {
+    //     const response = await axios.get(url + '/api/auth/transactions', { withCredentials: true });
+    //     console.log('Latest transactions:', response.data);
+    //   } catch (error) {
+    //     console.error('Error fetching latest transactions:', error);
+    //   }
+    // };
   
    return (
     
@@ -67,10 +74,10 @@ const Myfunds = () => {
         {/* Buttons */}
         <div className="flex justify-center space-x-4 my-6">
           <button className="bg-gray-200 text-black rounded-lg px-5 py-3 font-medium hover:bg-gray-300 focus:outline-none" onClick={togglewithdraw}>
-            WITHDRAW TO BANK
+            WITHDRAW FROM BANK
           </button>
           <button className="bg-gray-200 text-black rounded-lg px-5 py-3 font-medium hover:bg-gray-300 focus:outline-none" onClick={toggleadd}>
-            ADD FROM BANK
+            ADD TO BANK
           </button>
         </div>
 {/* this is for the withdraw and adding money windows*/ }
