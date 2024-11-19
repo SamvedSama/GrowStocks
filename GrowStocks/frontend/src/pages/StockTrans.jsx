@@ -25,13 +25,10 @@ const StockTrans = () => {
       setPrice(stock.currentPrice);
     }, []);
 
-
-
     const handlePayment = async (e) => {
         e.preventDefault();
         setLoading(true);
         setMessage("");
-    
         try {
           const response = await axios.post(url+"/api/auth/payment", {
             stockName,
@@ -42,8 +39,6 @@ const StockTrans = () => {
           );
           setMessage(response.data.message);
           navigate("/mystocks");
-          
- 
         } catch (error) {
           setMessage(error.response.data.error || "Payment failed.");
         } finally {
@@ -72,10 +67,8 @@ const StockTrans = () => {
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
                 className="w-full px-3 py-2 border rounded"
-
                 min="5"
                 step="10"
-                
                 required
               />
             </div>
@@ -85,7 +78,7 @@ const StockTrans = () => {
                 type="number"
                 value={price}
                 readonly
-                className="w-full px-3 py-2 border rounded bg-gray-400 curser-not-allowed"
+                className="w-full px-3 py-2 border rounded bg-gray-400 cursor-not-allowed"
                 min="0"
                 required
               />

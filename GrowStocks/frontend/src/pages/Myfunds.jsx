@@ -56,8 +56,8 @@ const Myfunds = () => {
       <div className="px-6 py-4 mx-auto">
         {/* Top Bar with Date and Market Indexes */}
         <div className="flex justify-between items-center text-sm mb-4">
-          <div>DATE:</div>
-          <div>NIFTY:        SENSEX:</div>
+          <div>DATE: {new Date().toLocaleDateString()}</div>
+          <div>NIFTY: 23518.50&nbsp; &nbsp;SENSEX: 77578.38</div>
         </div>
 
         {/* Sidebar Icon and Title */}
@@ -74,13 +74,12 @@ const Myfunds = () => {
         {/* Buttons */}
         <div className="flex justify-center space-x-4 my-6">
           <button className="bg-gray-200 text-black rounded-lg px-5 py-3 font-medium hover:bg-gray-300 focus:outline-none" onClick={togglewithdraw}>
+          ADD TO BANK
+          </button>
+          <button className="bg-gray-200 text-black rounded-lg px-5 py-3 font-medium hover:bg-gray-300 focus:outline-none " onClick={toggleadd}>
             WITHDRAW FROM BANK
           </button>
-          <button className="bg-gray-200 text-black rounded-lg px-5 py-3 font-medium hover:bg-gray-300 focus:outline-none" onClick={toggleadd}>
-            ADD TO BANK
-          </button>
         </div>
-{/* this is for the withdraw and adding money windows*/ }
         {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 ">
           <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 h-3/5 relative">            
@@ -112,44 +111,6 @@ const Myfunds = () => {
           </div>
         </div>
       )}
-
-        {/* Latest Transactions Table */}
-        <div className="mt-8">
-          <div className="border-t border-gray-600 py-2">
-            <p className="text-lg font-semibold">LATEST TRANSACTIONS</p>
-          </div>
-          <table className="w-full mt-4 text-sm">
-            <thead className="text-left border-b border-gray-600">
-              <tr>
-                <th className="pb-2">NAME</th>
-                <th className="pb-2">SELL/BUY</th>
-                <th className="pb-2">QTY</th>
-                <th className="pb-2">TRANSACTION ID</th>
-                <th className="pb-2">INVESTMENT TYPE</th>
-                <th className="pb-2">DATE</th>
-              </tr>
-            </thead>
-           {/* <tbody>
-               Dummy Data
-              <tr>
-                <td className="py-2">Company A</td>
-                <td className="py-2">BUY</td>
-                <td className="py-2">10</td>
-                <td className="py-2">TX123456</td>
-                <td className="py-2">Stocks</td>
-                <td className="py-2">2024-10-12</td>
-              </tr>
-              <tr>
-                <td className="py-2">Company B</td>
-                <td className="py-2">SELL</td>
-                <td className="py-2">5</td>
-                <td className="py-2">TX654321</td>
-                <td className="py-2">Bonds</td>
-                <td className="py-2">2024-10-10</td>
-              </tr>
-            </tbody>*/}
-          </table>
-        </div>
       </div> 
     </section>
   );
