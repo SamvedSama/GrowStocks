@@ -174,7 +174,7 @@ router.post("/sell", verifyToken, async (req, res) => {
 
 router.post("/investment",verifyToken, async (req, res) => {
     try {
-      const {investmentType, amount, sipDay } = req.body;
+      const {mutualName,investmentType,amount, sipDay } = req.body;
       const userId = req.user.id;
   
       if (investmentType === "sip" && (!sipDay || sipDay < 1 || sipDay > 28)) {
@@ -210,7 +210,7 @@ router.post("/investment",verifyToken, async (req, res) => {
       user.balance -= amount;
       await user.save();
 
-      const investment = new Investment({ userId, investmentType, amount, sipDay });
+      const investment = new Investment({ userId, mutualName,investmentType, amount, sipDay });
       await investment.save();
   
       res.status(201).json({ message: "Investment saved successfully!" });
@@ -219,6 +219,34 @@ router.post("/investment",verifyToken, async (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     }
     });
+
+router.post("/mutualsell", verifyToken, async (req, res) => {
+      const { mutualName, amount } = req.body;
+      const userId = req.user.id;
+      if (!mutualName || !amount) {
+        return res.status(400).json({ error: "All fields are required" });
+      }
+      if (amount <= 0) {
+        return res.status(400).json({ error: "Price must be a positive number" });
+      }
+      if (isNaN(amount)) {
+        return res.status(400).json({ error: "Price must be valid number" });
+      }
+      const user = await SignUp.findById(userId);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      const totalAmount = amount;
+      user.balance += totalAmount;
+      await user.save();
+      const mutual = await Investment.findOne({ userId, mutualName });
+      if (!mutual) {
+        return res.status(404).json({ error: "Mutual not found" });
+      }else{
+        await Investment.findByIdAndDelete(mutual._id);
+      }
+        res.status(200).json({ message: "Transaction successful!" });
+})
 
 router.get("/mutuals", verifyToken, async (req, res) => {
     try {

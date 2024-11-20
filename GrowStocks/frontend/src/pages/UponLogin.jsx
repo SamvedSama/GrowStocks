@@ -175,7 +175,7 @@ const UponLogin = () => {
     {/* 2nd section */}
 
     <div className='h-20 bg-white mt-5 flex justify-center items-center'>
-      <p className='text-4xl'>Hello <span className='bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-yellow-500 to-yellow-700'>{firstname}</span>, Your portfolio value is {isVisible ? `₹${portfolioValue}` : '₹******'}</p>
+      <p className='text-4xl'>Hello <span className='bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-yellow-500 to-yellow-700'>{firstname}</span>, Your balance is {isVisible ? `₹${portfolioValue}` : '₹******'}</p>
       <span><button className=' text-4xl p-2 rounded-full text-slate-950 hover:bg-blue-600 transition duration-300' onClick={toggleVisibility}>{isVisible? <FaEyeSlash /> : <FaEye />}</button></span>
     </div>
     <div className="grid grid-cols-3 gap-4 mt-4 text-white divide-x">

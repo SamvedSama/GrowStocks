@@ -12,11 +12,15 @@ const ContactUs = () => {
         <div className="flex flex-col items-center space-y-4">
           <div className="flex items-center text-xl">
             <CgPhone className="text-2xl text-blue-500 mr-2" />
-            <span>+1 234 567 8910</span>
+            <span>+91 9113020818</span>
           </div>
           <div className="flex items-center text-xl">
             <CgPhone className="text-2xl text-blue-500 mr-2" />
-            <span>+1 987 654 3210</span>
+            <span>+91 9535464786</span>
+          </div>
+          <div className="flex items-center text-xl">
+            <CgPhone className="text-2xl text-blue-500 mr-2" />
+            <span>+91 9008490106</span>
           </div>
         </div>
         <p className="text-center mt-4 text-sm">

@@ -26,13 +26,6 @@ const Mystocks = () => {
     showstocks();
   }, []);
 
-  const openStockInfo = (stock) => {
-    setSelectedUnit(stock);
-  };
-
-  const closeStockInfo = () => {
-    setSelectedUnit(null);
-  };
 
   const handleSell = (unit) => {
     navigate(`/sell/${unit.details.stockName}`);
