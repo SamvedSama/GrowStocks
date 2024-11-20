@@ -102,32 +102,46 @@ router.post("/payment", verifyToken, async (req, res) => {
       return res.status(400).json({ error: "Quantity and price must be valid numbers" });
     }
 
-    const user = await SignUp.findById(userId);
+    try{
+      const user = await SignUp.findById(userId);
 
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
 
-    const totalAmount = quantity * price;
+      const totalAmount = quantity * price;
 
-    if (user.balance < totalAmount) {
-      return res.status(400).json({ error: "Insufficient balance" });
-    }else{
-      user.balance-=totalAmount;
-      await user.save();
-    }
-    
-  
-    try {
-      const transaction = new Transaction({ 
+      if (user.balance < totalAmount) {
+        return res.status(400).json({ error: "Insufficient balance" });
+      }else{
+        user.balance-=totalAmount;
+        await user.save();
+      }
+
+      let existingStock = await Transaction.findOne({
         userId,
-        details:{
-            stockName, 
-            quantity, 
-            totalAmount },
+        "details.stockName": stockName,
       });
-      await transaction.save();
+
+      if (existingStock) {
+        existingStock.details.quantity = Number(existingStock.details.quantity) + Number(quantity);
+        existingStock.details.totalAmount = Number(existingStock.details.totalAmount) + Number(totalAmount);
+        await existingStock.save(); 
+      }
+      else{
+        const transaction = new Transaction({
+          userId,
+          details: {
+            stockName,
+            quantity,
+            totalAmount,
+          },
+        });
+        await transaction.save();
+      }
+  
       res.status(200).json({ message: "Payment successful!" });
+  
     } catch (error) {
       res.status(500).json({ error: "Payment failed, try again later." });
     }
@@ -154,6 +168,7 @@ router.post("/sell", verifyToken, async (req, res) => {
       return res.status(400).json({ error: "Insufficient quantity" });
     }
     stock.details.quantity -= quantity;
+    stock.details.totalAmount -= quantity * price;
     await stock.save();
     if(stock.details.quantity===0){
         await Transaction.findByIdAndDelete(stock._id);

@@ -19,7 +19,9 @@ const Login = () => {
       console.log('Login successful:', res.data);
       
       setError(false);
-      navigate("/welcome");
+      setTimeout(() => {
+        navigate("/welcome");
+      }, 2000);
     } catch (err) {
       setError(true);
       console.error('Login error:', err);
