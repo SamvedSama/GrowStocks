@@ -44,10 +44,10 @@ const Hamburgernav = () => {
                   <li className="p-2 text-slate-950 hover:bg-gray-100 cursor-pointer">Home</li>
                 </Link>
                 <Link to="/mystocks">
-                  <li className="p-2 text-slate-950 hover:bg-gray-100 cursor-pointer">My stocks</li>
+                  <li className="p-2 text-slate-950 hover:bg-gray-100 cursor-pointer">My Stocks</li>
                 </Link>
                 <Link to="/mutual">
-                  <li className="p-2 text-slate-950 hover:bg-gray-100 cursor-pointer">My mutual funds</li>
+                  <li className="p-2 text-slate-950 hover:bg-gray-100 cursor-pointer">My Mutual Funds</li>
                 </Link>
                 <Link to="/myipos">
                   <li className="p-2 text-slate-950 hover:bg-gray-100 cursor-pointer">My IPOs</li>

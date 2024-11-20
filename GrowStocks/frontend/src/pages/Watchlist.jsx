@@ -34,7 +34,7 @@ const Watchlist = () => {
       }
     } catch (err) {
       console.error("Error fetching watchlist:", err);
-      setError("Failed to fetch watchlist");
+      setError("Empty Watchlist");
     } finally {
       setIsLoading(false);
     }
@@ -68,6 +68,7 @@ const Watchlist = () => {
     try {
       // Check if the stock is already in the watchlist
       const stockExists = watchlistData.some((item) => item.stockname === stock.stockname);
+      console.log('here');
       updateState(!stockExists);  // Update the state optimistically
   
       const response = await axios.post(

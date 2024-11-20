@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { url } from "../url"; // Ensure this points to your backend URL
 import { useNavigate } from "react-router-dom";
+
 const MutualTrans = () => {
   const [investmentType, setInvestmentType] = useState("one-time");
   const [amount, setAmount] = useState("");
@@ -9,6 +10,10 @@ const MutualTrans = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const path = window.location.pathname;
+  const segments = path.split('/');
+  const mutualName = segments[2];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,6 +28,7 @@ const MutualTrans = () => {
 
     try {
       const response = await axios.post(url+'/api/auth/investment', {
+        mutualName,
         investmentType,
         amount: Number(amount),
         sipDay: investmentType === "sip" ? sipDay : null,
@@ -44,6 +50,8 @@ const MutualTrans = () => {
       <form onSubmit={handleSubmit}>
         {/* Investment Type */}
         <div className="mb-4">
+          <label className="block text-sm font-medium mb-1" htmlFor="mutual">Investment Name</label>
+          <input type="text" id="mutual" value={mutualName} className="w-full px-3 py-2 border rounded cursor-not-allowed bg-gray-500" />
           <label className="block text-sm font-medium mb-1">Investment Type</label>
           <select
             value={investmentType}

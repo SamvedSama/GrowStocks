@@ -34,7 +34,11 @@ const Mutual = () => {
   };
 
   const handleBuy = (unit) => {
-    navigate(`/buy/${unit.mutualName}`);
+    navigate(`/mutual/${unit.mutualName}`);
+  };
+
+  const handleSell = (unit) => {
+    navigate(`/sellmutual/${unit.mutualName}`);
   };
 
   return (
@@ -56,7 +60,6 @@ const Mutual = () => {
               <div className="flex justify-between items-center">
                 <div className="text-white">
                   <p className="font-semibold">{mutual.mutualName}</p>
-                  <p>Mutual Name: {mutual.mutualName}</p>
                   <p>Invested Amount: {mutual.amount}</p>
                   <p>Investment Type: {mutual.investmentType}</p>
                   {mutual.investmentType === "sip" && mutual.sipDay && (
@@ -75,43 +78,20 @@ const Mutual = () => {
                 >
                   BUY
                 </button>
+                <button
+                  className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition ml-10"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    handleSell(mutual);
+                  }}
+                >
+                  SELL
+                </button>
               </div>
             </div>
           ))
         )}
       </div>
-
-      {selectedUnit && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
-          <div className="bg-[#475569] p-6 rounded w-3/5 h-3/5 relative flex text-white">
-            <div className="absolute left-20 top-[180px]">Graph</div>
-            <h2 className="text-xl font-bold">{selectedUnit.mutualName}</h2>
-            <div className="absolute bottom-40 right-20 text-left text-0.5xl">
-              <p>Units: {selectedUnit.mktPrice}</p>
-              <p>Rating: {selectedUnit.rating}</p>
-              <p>Average Cost: {selectedUnit.avgPrice}</p>
-              <p>Investment Type: {selectedUnit.investmentType}</p>
-              {selectedUnit.investmentType === "sip" && selectedUnit.sipDay && (
-                <p>SIP Day: {selectedUnit.sipDay}</p>
-              )}
-              <p>Amount Invested: {selectedUnit.amount}</p>
-              <p>Investment Date: {new Date(selectedUnit.date).toLocaleDateString()}</p>
-            </div>
-            <button
-              className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition bottom-5 right-5 absolute"
-              onClick={() => handleBuy(selectedUnit)}
-            >
-              BUY
-            </button>
-            <button
-              className="absolute top-0 right-2 mt-4 text-black py-2 px-4 rounded hover:bg-[#f44336]"
-              onClick={closeMutualInfo}
-            >
-              X
-            </button>
-          </div>
-        </div>
-      )}
     </>
   );
 };
