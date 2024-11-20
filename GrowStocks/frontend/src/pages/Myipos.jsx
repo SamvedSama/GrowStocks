@@ -10,10 +10,10 @@ const Myipos = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  const handleBuyIPO = (ipo) => {
-    navigate(`/ipo/${ipo.details.ipoName}`);
-  }
-  // Fetch IPO investments from the backend
+  // const handleBuyIPO = (ipo) => {
+  //   navigate(`/ipo/${ipo.details.ipoName}`);
+  // }
+  // // Fetch IPO investments from the backend
   const showIpos = async () => {
     try {
       const res = await axios.get(url + "/api/auth/findipos", { withCredentials: true });
@@ -56,10 +56,10 @@ const Myipos = () => {
                 </div>
             </div>
             <div className="flex justify-between mt-4">
-            <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition ml-auto" onClick={(event) => {
+            <button className="bg-green-500 text-white py-2 cursor-not-allowed px-4 rounded hover:bg-green-600 transition ml-auto" onClick={(event) => {
                     event.stopPropagation();
                     handleBuyIPO(ipo);
-                  }}>Buy
+                  }}>APPLIED
             </button>
             </div>
             </div>
