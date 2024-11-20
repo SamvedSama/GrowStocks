@@ -31,7 +31,9 @@ const IPOTrans = () => {
       );
       setIsError(false);
       setMessage(response.data.message || "Investment successful.");
-      navigate("/myipos");
+      setTimeout(() => {
+        navigate("/myipos");
+      }, 2000);
     } catch (err) {
         setMessage(err.response?.data?.error || "Payment failed.");
     }

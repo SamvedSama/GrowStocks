@@ -38,7 +38,9 @@ const StockTrans = () => {
           { withCredentials: true }
           );
           setMessage(response.data.message);
-          navigate("/mystocks");
+          setTimeout(() => {
+            navigate("/mystocks");
+          }, 2000);
         } catch (error) {
           setMessage(error.response.data.error || "Payment failed.");
         } finally {

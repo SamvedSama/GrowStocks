@@ -29,7 +29,10 @@ const MutualTrans = () => {
       },
       { withCredentials: true });
       setMessage(response.data.message);
+      setTimeout(() => {
       navigate("/mutual");
+    }, 2000);
+      
     } catch (err) {
       setError(err.response?.data?.error || "Something went wrong!");
     }

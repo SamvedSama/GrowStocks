@@ -59,7 +59,7 @@ const Mystocks = () => {
               <div className="flex justify-between items-center">
                 <div>
                   <p className="text-white font-semibold">{stock.details.stockName}</p>
-                  <p className="text-white">Buying Price: {stock.details.totalAmount}</p>
+                  <p className="text-white">AMT: {stock.details.totalAmount}</p>
                   <p className="text-white">Quantity: {stock.details.quantity}</p>
                 </div>
                 <div className="text-right text-white">
